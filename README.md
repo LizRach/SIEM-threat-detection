@@ -34,7 +34,7 @@ Selected logs such as btmp to track authentication activity.
 🖼️ Screenshot: log-ingestion
 
 
-4. Simulate Failed SSH Logins
+3. Simulate Failed SSH Logins
 Enabled SSH service and simulated repeated failed logins:
 sudo systemctl start ssh
 for i in {1..10}; do ssh fakeuser@localhost exit; done
@@ -84,7 +84,8 @@ alert-running	Active alert triggered
 🔗 View Full Project on GitHub
 
 
-🧠 Skills Demonstrated
+🧠 Skills Demonstrated:
+
 Security Event Monitoring
 SIEM Configuration
 Threat Detection
