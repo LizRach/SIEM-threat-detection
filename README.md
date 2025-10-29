@@ -81,7 +81,7 @@ alert-running	Active alert triggered
 
 📂 Report / Repository
 
-🔗 View Full Project on GitHub
+🔗 [View Full Project on GitHub](https://github.com/LizRach/SIEM-threat-detection)
 
 
 🧠 Skills Demonstrated:
