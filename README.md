@@ -1,67 +1,111 @@
-SIEM Threat Detection Using Splunk
+🧠 SIEM Threat Detection using Splunk
 
-🎯 Project Overview
+📋 Objective
 
-This project demonstrates the use of Splunk as a Security Information and Event Management (SIEM) tool to detect suspicious activities on a simulated network. The goal was to configure Splunk to monitor system logs, detect failed SSH login attempts, and create alert mechanisms for real-time threat visibility.
+The goal of this project was to simulate and detect suspicious activities — such as multiple failed SSH login attempts — using Splunk as a Security Information and Event Management (SIEM) tool.
+The exercise demonstrates how to monitor system logs, detect anomalies, and configure alert rules for automated threat visibility.
 
-⚙️ Setup Process
+🧩 Tools & Technologies
 
-Installed Splunk Enterprise (Free) on Kali Linux using the Debian package.
+Splunk Enterprise (Free Version)
 
-Started Splunk and accessed the web interface at http://localhost:8000.
+Linux (Kali)
 
-Configured Splunk to ingest system logs from /var/log/ including btmp.log and other authentication-related logs.
+System Logs (/var/log/auth.log, btmp, syslog)
 
-Simulated failed SSH login attempts on the host machine using terminal commands.
+SSH Service (for simulating failed login attempts)
 
-Verified log ingestion in Splunk through search queries and created an alert for brute-force detection.
+⚙️ Steps & Configuration
+1. Splunk Installation
 
-🔍 Detection Logic
+Installed Splunk using the .deb package:
 
-Used the following Splunk search query to identify multiple failed SSH login attempts:
-
-index=* "Failed password" | stats count by src_ip | where count > 3
+sudo dpkg -i splunk.deb
 
 
-This query counts how many times a failed password attempt occurred per source IP address and highlights IPs exceeding the defined threshold — indicating potential brute-force attempts.
+Started the Splunk service:
 
-🔔 Alert Configuration
+sudo /opt/splunk/bin/splunk start
 
-Created an alert to automatically detect and notify of repeated failed login attempts:
 
-Search Query: index=* "Failed password" | stats count by src_ip | where count > 3
+Accessed the web interface via http://localhost:8000
+.
 
-Trigger Condition: When number of results > 0
+🖼️ Screenshot: splunk-login
 
-Schedule: Cron expression */1 * * * * (simulating every-minute detection)
+2. Log Ingestion
 
-Action: Display detection and alert logs in Splunk UI
+Added local system logs as a data source under:
+Settings → Add Data → Upload files → /var/log/
 
-🖼️ Screenshots Included
+Selected logs such as btmp to track authentication activity.
 
-splunk-login – Splunk web interface on startup
+🖼️ Screenshot: log-ingestion
 
-log-ingestion – Verification of log data successfully ingested
+3. Simulate Failed SSH Logins
 
-alert-setup – Alert configuration window in Splunk
+Enabled SSH service and simulated repeated failed logins:
 
-alert-running – Active alert detecting failed SSH logins
+sudo systemctl start ssh
+for i in {1..10}; do ssh fakeuser@localhost exit; done
 
-dashboard-overview – Overall interface showing query results and monitoring activity
 
-🧠 Key Skills Demonstrated
+Verified log entries using:
 
-SIEM configuration and monitoring
+sudo grep -i "Failed password" /var/log/auth.log
 
-Log ingestion and parsing
+4. Dashboard & Visualization
 
-Incident detection and alerting
+Created a new dashboard in Splunk.
 
-Linux command-line log generation
+Added a search query to visualize login failure attempts:
 
-Security event correlation and analysis
+index=* "Failed password" | stats count by host
 
-🏁 Outcome
 
-Successfully simulated and detected SSH brute-force attempts using Splunk’s SIEM capabilities.
-This project demonstrates practical experience in threat detection, incident response, and log analysis — critical skills for a Security Analyst or SOC role.
+Displayed results in line and bar charts.
+
+🖼️ Screenshot: dashboard-overview
+
+5. Alert Configuration
+
+Created an alert rule to trigger when failed SSH attempts exceeded a defined threshold.
+
+Configured the alert to run every hour and send notifications when conditions were met.
+
+🖼️ Screenshots:
+
+alert-setup
+
+alert-running
+
+🧾 Expected Outcome
+
+Splunk successfully identified and visualized failed SSH login attempts.
+
+Alerts were generated when suspicious activity (multiple failed logins) occurred.
+
+Demonstrated understanding of log analysis, SIEM dashboards, and alert configuration.
+
+📸 Screenshots Summary
+Screenshot	Description
+splunk-login	Initial Splunk login page
+log-ingestion	Adding local system logs
+dashboard-overview	Visualization of failed login attempts
+alert-setup	Alert rule configuration
+alert-running	Active alert triggered
+📂 Report / Repository
+
+🔗 View Full Project on GitHub
+
+🧠 Skills Demonstrated
+
+Security Event Monitoring
+
+SIEM Configuration
+
+Threat Detection
+
+Log Ingestion & Analysis
+
+Alert Rule Creation
