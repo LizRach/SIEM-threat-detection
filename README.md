@@ -22,6 +22,7 @@ Started the Splunk service:
 sudo /opt/splunk/bin/splunk start
 
 Accessed the web interface via http://kali:8000
+
 🖼️ Screenshot: splunk-login
 
 
@@ -29,10 +30,11 @@ Accessed the web interface via http://kali:8000
 Added local system logs as a data source under:
 Settings → Add Data → Upload files → /var/log/
 Selected logs such as btmp to track authentication activity.
+
 🖼️ Screenshot: log-ingestion
 
 
-3. Simulate Failed SSH Logins
+4. Simulate Failed SSH Logins
 Enabled SSH service and simulated repeated failed logins:
 sudo systemctl start ssh
 for i in {1..10}; do ssh fakeuser@localhost exit; done
@@ -47,24 +49,28 @@ Added a search query to visualize login failure attempts:
 index=* "Failed password" | stats count by host
 
 Displayed results in line and bar charts.
+
 🖼️ Screenshot: dashboard-overview
 
 
 5. Alert Configuration
 Created an alert rule to trigger when failed SSH attempts exceeded a defined threshold.
 Configured the alert to run every hour and send notifications when conditions were met.
+
 🖼️ Screenshots:
 alert-setup
 alert-running
 
 
 🧾 Expected Outcome
+
 Splunk successfully identified and visualized failed SSH login attempts.
 Alerts were generated when suspicious activity (multiple failed logins) occurred.
 Demonstrated understanding of log analysis, SIEM dashboards, and alert configuration.
 
 
 📸 Screenshots Summary
+
 Screenshot	Description
 splunk-login	Initial Splunk login page
 log-ingestion	Adding local system logs
@@ -74,6 +80,7 @@ alert-running	Active alert triggered
 
 
 📂 Report / Repository
+
 🔗 View Full Project on GitHub
 
 
